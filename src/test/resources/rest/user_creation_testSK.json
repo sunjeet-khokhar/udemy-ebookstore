@@ -1,0 +1,45 @@
+{
+  "scenarioName": "create new user test",
+  "steps": [
+    {
+      "name": "login",
+      "method": "POST",
+      "url": "/login",
+      "request": {
+        "body": {
+          "username": "jwt",
+          "password": "jwt"
+        }
+      },
+      "assertions": {
+        "status": 200,
+        "headers": {
+          "Authorization": "$NOT.NULL"
+        }
+      }
+    },
+    {
+      "name": "create_user_succesfully",
+      "method" : "POST",
+      "url": "/api/users",
+      "request": {
+        "headers": {
+          "Authorization": "${$.login.response.headers.Authorization[0]}"
+        },
+        "body": {
+          "firstName": "Kafka1",
+          "lastName": "Migos1",
+          "email": "kaf1@kafka.com"
+        }
+      },
+      "assertions": {
+        "status": 201,
+        "body": {
+          "firstName": "Kafka1",
+          "lastName": "Migos1",
+          "email": "kaf1@kafka.com"
+        }
+      }
+    }
+  ]
+}
